@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import { inject } from 'vue'
+
 interface Photo {
   id: number
-  title: string,
+  title: string
   url: string
 }
 interface IProps {
@@ -9,24 +11,22 @@ interface IProps {
 }
 
 const props = defineProps<IProps>()
-
-function getImage (url?: string): string {
-  return import.meta.env.VITE_API_URL + 'src/assets/images/' + url
-}
+const getImage = inject('getImage')
 </script>
 
 <template>
   <div v-if="props.photo" class="card">
     <div class="card-image">
       <div class="overlay"></div>
-      <img v-if="!props.photo.url"
-           class="no-image"
-           :src="getImage('error/no-image.png')"
-           alt="No image">
-      <img v-else :src="getImage(props.photo.url)"
-           :alt="props.photo.title">
+      <img
+        v-if="!props.photo.url"
+        class="no-image"
+        :src="getImage('/error/no-image.png')"
+        alt="No image"
+      />
+      <img v-else :src="getImage(props.photo.url)" :alt="props.photo.title" />
     </div>
-    <span class="card-title">{{ props.photo.title || "Untitled" }}</span>
+    <span class="card-title">{{ props.photo.title || 'Untitled' }}</span>
   </div>
 </template>
 
