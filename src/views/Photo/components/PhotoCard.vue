@@ -11,7 +11,6 @@ interface IProps {
 const props = defineProps<IProps>()
 
 function getImage (url?: string): string {
-  console.log(import.meta.env.VITE_API_URL + 'src/assets/images/' + url)
   return import.meta.env.VITE_API_URL + 'src/assets/images/' + url
 }
 </script>
