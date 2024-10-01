@@ -11,6 +11,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 function getImage (url?: string): string {
+  console.log(import.meta.env.VITE_API_URL + 'src/assets/images/' + url)
   return import.meta.env.VITE_API_URL + 'src/assets/images/' + url
 }
 </script>
@@ -19,10 +20,14 @@ function getImage (url?: string): string {
   <div v-if="props.photo" class="card">
     <div class="card-image">
       <div class="overlay"></div>
-      <img :src="getImage(props.photo.url)"
+      <img v-if="!props.photo.url"
+           class="no-image"
+           :src="getImage('error/no-image.png')"
+           alt="No image">
+      <img v-else :src="getImage(props.photo.url)"
            :alt="props.photo.title">
     </div>
-    <span class="card-title">{{ props.photo.title }}</span>
+    <span class="card-title">{{ props.photo.title || "Untitled" }}</span>
   </div>
 </template>
 
@@ -46,6 +51,9 @@ function getImage (url?: string): string {
       height: 100%;
       object-fit: cover;
     }
+    img.no-image {
+      object-fit: contain;
+    }
   }
   &-title {
     font-weight: bold;
@@ -66,7 +74,6 @@ function getImage (url?: string): string {
   inset: 0;
   display: none;
 }
-
 @keyframes showOverlay {
   from {
     height: 0;
