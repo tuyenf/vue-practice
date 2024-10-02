@@ -10,7 +10,7 @@ const urls = [
   "/portrait.png"
 ];
 
-const photos = Array.from({ length: 20 }, (_, index) => ({
+const photos = Array.from({ length: 24 }, (_, index) => ({
   id: index + 1,
   title: titles[index % 2],
   url: urls[index % 2]

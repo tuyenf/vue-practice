@@ -12,6 +12,7 @@ interface IProps {
 
 const props = defineProps<IProps>()
 const getImage = inject('getImage')
+const truncateText = inject('truncateText')
 </script>
 
 <template>
@@ -26,7 +27,7 @@ const getImage = inject('getImage')
       />
       <img v-else :src="getImage(props.photo.url)" :alt="props.photo.title" />
     </div>
-    <span class="card-title">{{ props.photo.title || 'Untitled' }}</span>
+    <span class="card-title" :style="truncateText()">{{ props.photo.title || 'Untitled' }}</span>
   </div>
 </template>
 
@@ -58,10 +59,6 @@ const getImage = inject('getImage')
     font-weight: bold;
     margin: 4px;
     font-size: 0.9rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 }
 .overlay {
